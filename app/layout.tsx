@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer";
-import NavBar from "@/components/navbar";
+import Navbar from "@/components/navbar";
 
 const font = Urbanist({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${font.className} antialiased`}>
-        <NavBar />
+        <Navbar />
         {children}
         <Footer />
       </body>

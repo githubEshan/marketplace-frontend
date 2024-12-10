@@ -2,8 +2,9 @@ import Link from "next/link";
 import Container from "./ui/container";
 import MainNav from "@/components/main-nav";
 import getCategories from "./actions/get-categories";
+import NavbarActions from "./navbar-actions";
 
-const NavBar = async () => {
+const Navbar = async () => {
   const categories = await getCategories();
   return (
     <div className="border-b">
@@ -13,10 +14,11 @@ const NavBar = async () => {
             <p>MU-MarketPlace</p>
           </Link>
           <MainNav data={categories} />
+          <NavbarActions/>
         </div>
       </Container>
     </div>
   );
 };
 
-export default NavBar;
+export default Navbar;
