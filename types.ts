@@ -10,13 +10,18 @@ export interface Category{
     billboard: Billboard;
 };
 
-//export interface Product{
-  //  id: string;
-    //name: string;
-    //description: string
-    //images: Images[]
-//}
+export interface Product{
+    category: any;
+    id: string;
+    name: string;
+    description: string;
+    price: string;
+    location: string;
+    condition: string;
+    images: Image[]
+}
 
-export interface Images{
-
+export interface Image{
+    id: string;
+    url: string
 }
