@@ -9,7 +9,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={cn(`
+        className={cn(
+          `
           w-auto
           rounded-fullbg-black
           border-transparent
@@ -19,7 +20,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           text-white
           hover:opacity-75
           transition
-          `, className)}
+          `,
+          className
+        )}
+        {...props}
       >
         {children}
       </button>

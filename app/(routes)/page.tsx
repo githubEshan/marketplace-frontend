@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const billboard = await getBillboard("e59e5d5b-9823-41ef-ab8f-a7ce1e3a87cf");
+  const billboard = await getBillboard("68ae94a6-8993-4b22-a0b8-b669b6933691");
 
   return (
     <Container>
