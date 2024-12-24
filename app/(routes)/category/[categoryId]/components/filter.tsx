@@ -1,58 +1,56 @@
-"use client";
+"use client"; // Enables client-side interactivity
 
-import Button from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-interface FilterPageProps {
-  data: string; // Display name for the filter
-  valueKey: string; // Key for the query parameter
-  options: string[]; // Available filter options
-}
-
-const Filter: React.FC<FilterPageProps> = ({ data, valueKey, options }) => {
-  const searchParams = useSearchParams();
+export default function FilterForm({
+  filters,
+}: {
+  filters: { condition?: string };
+}) {
   const router = useRouter();
+  const [condition, setCondition] = useState(filters.condition || "");
 
-  const selectedValue = searchParams.get(valueKey);
+  const onClick = (newCondition: string) => {
+    let updatedCondition = "";
 
-  const onClick = (id: string) => {
-    const currentParams = new URLSearchParams(searchParams.toString());
-
-  
-    if (currentParams.get(valueKey) === id) {
-      currentParams.delete(valueKey);
+    if (condition === newCondition) {
+      // Deselect if the same condition is clicked
+      setCondition("");
     } else {
-      currentParams.set(valueKey, id);
+      updatedCondition = newCondition;
+      setCondition(newCondition);
     }
 
-    // Update the URL with the new query parameters
-    const queryString = currentParams.toString();
-    const newUrl = queryString ? `?${queryString}` : window.location.pathname;
+    const params = new URLSearchParams();
 
-    router.push(newUrl);
+    if (updatedCondition) {
+      params.append("condition", updatedCondition);
+    }
+
+    router.push(`?${params.toString()}`);
   };
 
   return (
-    <div className="mb-8">
-      <h3 className="text-lg font-semibold">{data}</h3>
-      <hr className="my-4" />
-      <div className="flex gap-4">
-        {options.map((option) => (
-          <Button
-            key={option}
-            onClick={() => onClick(option)}
-            className={cn(
-              "rounded-md text-sm text-gray-800 bg-white border border-gray-300",
-              selectedValue === option && "bg-black text-white"
-            )}
-          >
-            {option}
-          </Button>
-        ))}
-      </div>
+    <div className="flex space-x-4">
+      <button
+        type="button"
+        className={`px-4 py-2 rounded border ${
+          condition === "new" ? "bg- text-black ite" : "bg-gray-200"
+        }`}
+        onClick={() => onClick("new")}
+      >
+        New
+      </button>
+      <button
+        type="button"
+        className={`px-4 py-2 rounded border ${
+          condition === "used" ? "bg-black text-white" : "bg-gray-200"
+        }`}
+        onClick={() => onClick("used")}
+      >
+        Used
+      </button>
     </div>
   );
-};
-
-export default Filter;
+}

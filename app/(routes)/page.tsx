@@ -17,14 +17,7 @@ const HomePage = async () => {
       </div>
       <Separator />
 
-      <div className="flex items-center justify-center">
-        <Button
-          className="items-stretch flex bg-blue-950 px-4 py-2 text-white rounded-sm mt-5 text-2xl font-bold "
-          onClick={() => {}}
-        >
-          Start Browsing
-        </Button>
-      </div>
+      <div className="flex items-center justify-center">Start Browsing</div>
     </Container>
   );
 };
