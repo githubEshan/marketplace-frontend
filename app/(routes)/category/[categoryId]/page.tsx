@@ -42,7 +42,7 @@ const Categorypage: React.FC<CategoryPageProps> = async ({
             <FilterForm filters={{ condition: searchParams.condition }} />
           </div>
           <div className="mt-6 lg:col-span-4 lg:mt-0">
-            {products.length === 0 ? (
+            {filteredProducts.length === 0 ? (
               <div className="text-center text-gray-500">No products found</div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
