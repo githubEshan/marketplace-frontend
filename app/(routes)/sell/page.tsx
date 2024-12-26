@@ -1,9 +1,12 @@
-import ProductForm from "./[productId]/product-form";
-
+import getCategories from "@/actions/get-categories";
+/*figure out how to make the products page and call the post API */
 const Sell = () => {
-  return (
-    <ProductForm />
-  );
+
+const categories = getCategories()
+
+
+
+  return <div>Sell</div>;
 };
 
 export default Sell;
