@@ -13,6 +13,7 @@ export interface Category{
 export interface Product{
     category: any;
     id: string;
+    userId: string;
     name: string;
     description: string;
     price: string;
