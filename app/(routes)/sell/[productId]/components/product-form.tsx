@@ -4,6 +4,7 @@ import * as z from "zod";
 import axios from "axios";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,10 +29,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import { useUser } from "@clerk/nextjs";
 import { Product, Image, Category } from "@/types";
 import { Button } from "@/components/ui/bt";
 
@@ -43,6 +46,7 @@ const formSchema = z.object({
   price: z.coerce.number().min(1),
   categoryId: z.string().min(1),
   condition: z.enum(["new", "used"]),
+  userId: z.string().min(1),
 });
 
 type ProductFormValues = z.infer<typeof formSchema>;
@@ -63,10 +67,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const params = useParams();
   const router = useRouter();
 
+  const currentUser = useUser();
+  const userId = currentUser.user?.id;
+
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit product" : "Create A Product";
+  const description = initialData ? "Edit a product" : "Add a new product";
   const toastMessage = initialData ? "Product updated" : "Product Created.";
   const action = initialData ? "Save changes" : "Create";
 
@@ -80,6 +88,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             initialData.condition === "new" || initialData.condition === "used"
               ? initialData.condition
               : "new",
+          userId: userId || "",
         }
       : {
           name: "",
@@ -89,14 +98,52 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           categoryId: "",
           location: "",
           condition: "new",
+          userId: userId || "",
         },
   });
 
   const onSubmit = async (data: ProductFormValues) => {
-    
+    try {
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+      const payload = { ...data, userId };
+      setLoading(true);
+      if (initialData) {
+        await axios.patch(
+          `/api/${params.storeId}/products/${params.productId}`,
+          data
+        );
+      } else {
+        const response = await axios.post(`${URL}`, payload, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.status === 200) {
+          toast.success(toastMessage);
+          router.push("/sell"); // Redirect to products page or wherever you want
+        }
+      }
+      toast.success(toastMessage);
+    } catch (error) {
+      toast.error("something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const onDelete = async () => {};
+  const onDelete = async () => {
+    try {
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
+      router.refresh();
+      router.push("/");
+      toast.success("product deleted");
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  };
 
   return (
     <>
@@ -107,7 +154,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         loading={loading}
       />
       <div className="flex first-letter:items-center justify-between">
-        <Heading title={title} description="" />
+        <Heading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}
@@ -119,12 +166,11 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           </Button>
         )}
       </div>
-
       <Separator />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 w-full mt-2"
+          className="space-y-8 w-full"
         >
           <FormField
             control={form.control}
@@ -209,7 +255,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="categoryId"
@@ -242,6 +287,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="condition"
@@ -301,3 +347,5 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     </>
   );
 };
+
+export default ProductForm;

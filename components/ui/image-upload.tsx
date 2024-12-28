@@ -33,7 +33,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   if (!isMounted) {
     return null;
   }
-  console.log("Current Images:", value);
 
   return (
     <div>
