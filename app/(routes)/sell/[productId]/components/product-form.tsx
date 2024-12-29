@@ -37,6 +37,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import { useUser } from "@clerk/nextjs";
 import { Product, Image, Category } from "@/types";
 import { Button } from "@/components/ui/bt";
+import { createProduct } from "@/actions/post-products";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -113,16 +114,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           data
         );
       } else {
-        const response = await axios.post(`${URL}`, payload, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (response.status === 200) {
-          toast.success(toastMessage);
-          router.push("/sell"); // Redirect to products page or wherever you want
-        }
+        const payload = { ...data, userId };
+        await createProduct(payload);
       }
+      router.push("/sell");
       toast.success(toastMessage);
     } catch (error) {
       toast.error("something went wrong");
