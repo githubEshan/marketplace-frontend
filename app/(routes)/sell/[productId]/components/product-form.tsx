@@ -38,6 +38,7 @@ import { useUser } from "@clerk/nextjs";
 import { Product, Image, Category } from "@/types";
 import { Button } from "@/components/ui/bt";
 import { createProduct } from "@/actions/create-product";
+import { updateProduct } from "@/actions/update-product";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -109,11 +110,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       const payload = { ...data, userId };
       setLoading(true);
       if (initialData) {
-        await axios.patch(URL, payload, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        await updateProduct(URL, payload);
       } else {
         await createProduct(payload);
       }
