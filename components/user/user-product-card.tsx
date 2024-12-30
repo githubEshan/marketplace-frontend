@@ -12,14 +12,15 @@ interface UserProductCard {
 const UserProductCard: React.FC<UserProductCard> = ({ data }) => {
   const router = useRouter();
 
-  const handleClick = () => {};
+  //gives error if you load directly in the image
+  const image = data?.images[0]?.url;
 
   return (
     <div className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
       <div className="aspect-square rounded-xl bg-gray-100 relative">
         <Image
           alt="Image"
-          src={data?.images?.[0].url}
+          src={image}
           fill
           className="aspect-square object-cover rounded-md"
         />

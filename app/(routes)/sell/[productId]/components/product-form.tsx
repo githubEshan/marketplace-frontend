@@ -37,7 +37,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import { useUser } from "@clerk/nextjs";
 import { Product, Image, Category } from "@/types";
 import { Button } from "@/components/ui/bt";
-import { createProduct } from "@/actions/post-products";
+import { createProduct } from "@/actions/create-product";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -105,16 +105,16 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   const onSubmit = async (data: ProductFormValues) => {
     try {
-      const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/products/${params.productId}`;
       const payload = { ...data, userId };
       setLoading(true);
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/products/${params.productId}`,
-          data
-        );
+        await axios.patch(URL, payload, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       } else {
-        const payload = { ...data, userId };
         await createProduct(payload);
       }
       router.push("/sell");

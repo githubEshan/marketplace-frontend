@@ -19,10 +19,10 @@ export interface Product{
     price: string;
     location: string;
     condition: string;
-    images: Image[]
+    images: Image[];
 }
 
 export interface Image{
     id: string;
-    url: string
+    url: string;
 }
