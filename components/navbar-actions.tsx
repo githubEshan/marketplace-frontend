@@ -6,6 +6,7 @@ import Button from "./ui/button";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { UserButton, UserProfile } from "@clerk/nextjs";
 
 const NavbarActions = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -47,6 +48,7 @@ const NavbarActions = () => {
         <ShoppingBag size={20} color="white" />
         <span className="ml-2 text-sm font-medium text-white">0</span>
       </Button>
+      <UserButton afterSwitchSessionUrl="/" />
     </div>
   );
 };

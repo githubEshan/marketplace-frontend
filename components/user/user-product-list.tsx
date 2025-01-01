@@ -12,15 +12,15 @@ const UserProductList: React.FC<UserProductListProps> = async ({
   title,
   items,
 }) => {
-  const current_user = await currentUser();
-
+  const user = await currentUser();
+  const current_user = user?.id;
   return (
     <div className="space-y-4">
       <h3 className="font-bold text-3xl">{title}</h3>
       {items.length === 0 && <NoResults />}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items
-          .filter((item) => item.userId === current_user?.id)
+          .filter((item) => item.userId === current_user)
           .map((item) => (
             <UserProductCard key={item.id} data={item} />
           ))}

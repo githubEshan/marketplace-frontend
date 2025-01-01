@@ -111,11 +111,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       setLoading(true);
       if (initialData) {
         await updateProduct(URL, payload);
+        toast.success(toastMessage);
       } else {
         await createProduct(payload);
+        toast.success(toastMessage);
       }
       router.push("/sell");
-      toast.success(toastMessage);
     } catch (error) {
       toast.error("something went wrong");
     } finally {

@@ -13,7 +13,7 @@ const Sell = async () => {
 
   return (
     <>
-      <ProductClient  />
+      <ProductClient />
       <div className="px-4 py-10 sm:px-6 lg:px-8">
         <UserProductList title={""} items={userProducts} />
       </div>
