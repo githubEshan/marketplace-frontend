@@ -3,10 +3,11 @@
 import { ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 import Button from "./ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { UserButton, UserProfile } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
+import useCart from "@/hooks/use-cart";
 
 const NavbarActions = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -14,6 +15,9 @@ const NavbarActions = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  const router = useRouter();
+  const cart = useCart();
 
   if (!isMounted) {
     return null;
@@ -45,8 +49,14 @@ const NavbarActions = () => {
         </Link>
       </Button>
       <Button className="flex items-center rounded-full bg-black px-4 py-2">
-        <ShoppingBag size={20} color="white" />
-        <span className="ml-2 text-sm font-medium text-white">0</span>
+        <ShoppingBag
+          onClick={() => router.push("/cart")}
+          size={20}
+          color="white"
+        />
+        <span className="ml-2 text-sm font-medium text-white">
+          {cart.items.length}
+        </span>
       </Button>
       <UserButton afterSwitchSessionUrl="/" />
     </div>

@@ -8,6 +8,7 @@ import Currency from "@/components/ui/currency";
 import { useRouter } from "next/navigation";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
+import useCart from "@/hooks/use-cart";
 
 interface ProductCard {
   data: Product;
@@ -15,17 +16,23 @@ interface ProductCard {
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const router = useRouter();
   const PreviewModal = usePreviewModal();
+  const cart = useCart();
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     PreviewModal.onOpen(data);
   };
 
+  const onAddtoCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    cart.addItem(data);
+  };
+
   const handleClick = () => {
     router.push(`/product/${data?.id}`);
   };
 
-  //gives error if you load directly in the image 
+  //gives error if you load directly in the image
   const image = data?.images[0]?.url;
 
   return (
@@ -48,7 +55,7 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
               icon={<Expand size={20} className="text-gry-600" />}
             />
             <IconButton
-              onClick={() => {}}
+              onClick={onAddtoCart}
               icon={<ShoppingCart size={20} className="text-gry-600" />}
             />
           </div>
