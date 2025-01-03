@@ -3,13 +3,20 @@
 import { Product } from "@/types";
 import Currency from "./ui/currency";
 import Button from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { MessageCircleIcon, ShoppingCart } from "lucide-react";
+import useCart from "@/hooks/use-cart";
 
 interface InfoProps {
   data: Product;
 }
 
 const Info: React.FC<InfoProps> = ({ data }) => {
+  const cart = useCart();
+
+  const addToCart = () => {
+    cart.addItem(data);
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
@@ -26,18 +33,19 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       </div>
 
       <div className="flex items-center gap-x-4">
+        <h3 className="font-semibold text-black">Pickup Location</h3>
+        <div>{data.location}</div>
+      </div>
+      <div className="flex items-center gap-x-4">
         <h3 className="font-semibold text-black">Description</h3>
         <div>{data.description}</div>
       </div>
-
-      <div className="flex items-center gap-x-4">
-        <h3 className="font-semibold text-black">
-          Location for product to be picked up:
-        </h3>
-        <div>{data.location}</div>
-      </div>
       <div className="mt-10 flex items-center gap-x-3">
         <Button className="flex items-center gap-x-2">
+          Message Seller
+          <MessageCircleIcon />
+        </Button>
+        <Button onClick={addToCart} className="flex items-center gap-x-2">
           Add to Cart
           <ShoppingCart />
         </Button>
