@@ -5,6 +5,7 @@ import Currency from "./ui/currency";
 import Button from "@/components/ui/button";
 import { MessageCircleIcon, ShoppingCart } from "lucide-react";
 import useCart from "@/hooks/use-cart";
+import { useRouter } from "next/navigation";
 
 interface InfoProps {
   data: Product;
@@ -12,10 +13,12 @@ interface InfoProps {
 
 const Info: React.FC<InfoProps> = ({ data }) => {
   const cart = useCart();
+  const router = useRouter();
 
   const addToCart = () => {
     cart.addItem(data);
   };
+
 
   return (
     <div>
@@ -41,7 +44,8 @@ const Info: React.FC<InfoProps> = ({ data }) => {
         <div>{data.description}</div>
       </div>
       <div className="mt-10 flex items-center gap-x-3">
-        <Button className="flex items-center gap-x-2">
+        <Button onClick={() => router.push("/chat")} 
+          className="flex items-center gap-x-2">
           Message Seller
           <MessageCircleIcon />
         </Button>

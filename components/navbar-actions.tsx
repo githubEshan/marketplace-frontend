@@ -23,6 +23,11 @@ const NavbarActions = () => {
     return null;
   }
 
+  const chat = {
+    href: `/chat`,
+    label: "Chats",
+    active: pathname === `/chat`,
+  };
   const sell = {
     href: `/sell`,
     label: "Sell",
@@ -31,6 +36,23 @@ const NavbarActions = () => {
 
   return (
     <div className="ml-auto flex items-center gap-x-4">
+      <Button
+        className={cn(
+          "bg-white text-md font-medium transition-colors hover:text-black",
+          chat ? "text-black" : "text-neutral-500"
+        )}
+      >
+        <Link
+          key={chat.href}
+          href={chat.href}
+          className={cn(
+            "text-md font-medium transition-colors hover:text-black",
+            chat ? "text-black" : "text-neutral-500"
+          )}
+        >
+          Chats
+        </Link>
+      </Button>
       <Button
         className={cn(
           "bg-white text-md font-medium transition-colors hover:text-black",

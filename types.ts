@@ -26,3 +26,18 @@ export interface Image{
     id: string;
     url: string;
 }
+
+export interface Chat {
+    chatName: String;
+    id: String;
+    fromUserId: String;
+    toUserId: String;
+    messages: Message[];
+    productId: Product[]
+}
+
+export interface Message{
+    id: String;
+    text: String;
+    chatId: Chat;
+}
