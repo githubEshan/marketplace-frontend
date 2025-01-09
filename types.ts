@@ -28,17 +28,17 @@ export interface Image{
 }
 
 export interface Chat {
-    chatName: String;
-    id: String;
-    fromUserId: String;
-    toUserId: String;
+    chatName: string;
+    id: string;
+    fromUserId: string;
+    toUserId: string;
     messages: Message[];
     productId: Product[]
 }
 
 export interface Message{
-    id: String;
-    userId: String;
-    text: String;
+    id: string;
+    userId: string;
+    text: string;
     chatId: Chat;
 }

@@ -1,5 +1,5 @@
 import getChats from "@/actions/get-chats";
-import AllChats from "@/components/sidebar";
+import AllChats from "@/components/all-chats";
 
 interface ChatsProps {}
 
