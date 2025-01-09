@@ -38,6 +38,7 @@ export interface Chat {
 
 export interface Message{
     id: String;
+    userId: String;
     text: String;
     chatId: Chat;
 }

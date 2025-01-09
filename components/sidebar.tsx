@@ -12,9 +12,9 @@ interface AllChatProps {
 const AllChats: React.FC<AllChatProps> = ({ data }) => {
   const pathname = usePathname();
   const routes = data.map((route) => ({
-    href: `/chats/${route.productId}/${route.id}`,
+    href: `/chat/${route.id}`,
     label: route.chatName,
-    active: pathname === `/chats/${route.productId}/${route.id}`,
+    active: pathname === `/chat/${route.id}`,
   }));
 
   return (
@@ -39,7 +39,6 @@ const AllChats: React.FC<AllChatProps> = ({ data }) => {
           >
             <div className="flex items-center space-x-3">
               <div className="h-10 w-10 bg-gray-300 rounded-full"></div>{" "}
-              {/* Placeholder for profile picture */}
               <span>{route.label}</span>
             </div>
           </Link>
