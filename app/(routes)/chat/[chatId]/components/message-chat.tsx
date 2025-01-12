@@ -2,12 +2,18 @@
 
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
 import { useState } from "react";
+import * as z from "zod";
 
 interface ChatInterfaceProps {
   data: Chat;
 }
+
+const formSchema = z.object({
+  text: z.string().min(1),
+  userId: z.string().min(1),
+  chatId: z.string().min(1),
+})
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -28,8 +34,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
         </div>
       </header>
 
-      {/* Messages Section */}
-      {/* Loop through messages and based on messages userId, either keep it on the left or right using the  ? :*/}
       <div>
         <main className="flex-1 overflow-y-auto p-4 space-y-4">
           {data.messages.map((message, index) => {
