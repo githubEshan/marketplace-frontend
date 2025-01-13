@@ -33,12 +33,12 @@ export interface Chat {
     fromUserId: string;
     toUserId: string;
     messages: Message[];
-    productId: Product[]
+    productId: string;
 }
 
 export interface Message{
     id: string;
     userId: string;
     text: string;
-    chatId: Chat;
+    chatId: string;
 }

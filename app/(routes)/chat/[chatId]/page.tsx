@@ -8,7 +8,6 @@ interface ChatPageProps {
 }
 const ChatPage: React.FC<ChatPageProps> = async ({ params }) => {
   const chat = await getChat(params.chatId);
-  console.log(chat);
   return (
     <div>
       <MessagesPage data={chat} />
