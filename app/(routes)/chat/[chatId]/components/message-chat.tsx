@@ -16,11 +16,14 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { createMessage } from "@/actions/post-message";
+import { createMessage } from "@/actions/create-message";
+import axios from "axios";
 
 interface ChatInterfaceProps {
   data: Chat;
 }
+
+export const revalidate = 0;
 
 const formSchema = z.object({
   text: z.string().min(1),
@@ -32,15 +35,26 @@ type ChatFormValues = z.infer<typeof formSchema>;
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
-  const [currentMessage, setCurrentMessage] = useState<string>("");
   const currentUser = useUser();
   const user = currentUser.user?.id;
-  const product = data.productId;
 
   const onSubmit = async (data: ChatFormValues) => {
     try {
       setLoading(true);
-      await createMessage(data);
+      console.log("clicked");
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/chats/${data.chatId}/messages`;
+      const response = await axios.post(URL, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status === 200) {
+        return response.data;
+        console.log("worked");
+      } else {
+        throw new Error("Failed to create product");
+        console.log("failed");
+      }
     } catch (error) {
       console.log("error");
     } finally {
