@@ -3,7 +3,7 @@
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
@@ -18,12 +18,11 @@ import {
 } from "@/components/ui/form";
 import { createMessage } from "@/actions/create-message";
 import axios from "axios";
+import getChat from "@/actions/get-chat";
 
 interface ChatInterfaceProps {
   data: Chat;
 }
-
-export const revalidate = 0;
 
 const formSchema = z.object({
   text: z.string().min(1),
@@ -48,12 +47,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
           "Content-Type": "application/json",
         },
       });
+      getChat(data.chatId);
       if (response.status === 200) {
         return response.data;
-        console.log("worked");
       } else {
         throw new Error("Failed to create product");
-        console.log("failed");
       }
     } catch (error) {
       console.log("error");
@@ -61,6 +59,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getChat(data.id);
+    }, 30000); // Fetch every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const form = useForm<ChatFormValues>({
     resolver: zodResolver(formSchema),
