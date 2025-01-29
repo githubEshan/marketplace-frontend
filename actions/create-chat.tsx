@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createProduct = async (payload: any) => {
+export const createChat = async (payload: any) => {
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/chats`;
   const response = await axios.post(URL, payload, {
     headers: {

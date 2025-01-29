@@ -7,7 +7,6 @@ const ChatsPage: React.FC<ChatsProps> = async () => {
   const chats = await getChats();
   return (
     <div>
-      Messages
       <div className="margin:auto ">
         <AllChats data={chats} />
       </div>

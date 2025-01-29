@@ -31,7 +31,7 @@ const formSchema = z.object({
 });
 
 type ChatFormValues = z.infer<typeof formSchema>;
-
+// add soemthing that will reload the website after 30 seconds
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const currentUser = useUser();

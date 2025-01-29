@@ -20,6 +20,7 @@ export interface Product{
     location: string;
     condition: string;
     images: Image[];
+    chats: Chat[];
 }
 
 export interface Image{
