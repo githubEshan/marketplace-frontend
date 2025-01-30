@@ -9,7 +9,7 @@ const Navbar = async () => {
   return (
     <div className="border-b">
       <Container>
-        <div className="relative px-4 sm:px-6 lg:px-8 flex items-center h-16">
+        <div className="mr-10 ml-12 relative px-4 sm:px-6 lg:px-8 flex items-center h-16">
           <Link href="/" className="ml-2 flex lg:ml-0 gap-x-2">
             <p>MU MarketPlace</p>
           </Link>

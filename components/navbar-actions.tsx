@@ -35,42 +35,45 @@ const NavbarActions = () => {
   };
 
   return (
-    <div className="ml-auto flex items-center gap-x-4">
-      <Button
-        className={cn(
-          "bg-white text-md font-medium transition-colors hover:text-black",
-          chat ? "text-black" : "text-neutral-500"
-        )}
-      >
-        <Link
-          key={chat.href}
-          href={chat.href}
+    <div className="ml-auto flex items-center space-x-4">
+      
+      <div className="ml-auto flex items-center space-x-2">
+        <Button
           className={cn(
-            "text-md font-medium transition-colors hover:text-black",
+            "bg-white text-md font-medium transition-colors hover:text-black",
             chat ? "text-black" : "text-neutral-500"
           )}
         >
-          Chats
-        </Link>
-      </Button>
-      <Button
-        className={cn(
-          "bg-white text-md font-medium transition-colors hover:text-black",
-          sell ? "text-black" : "text-neutral-500"
-        )}
-      >
-        <Link
-          key={sell.href}
-          href={sell.href}
+          <Link
+            key={chat.href}
+            href={chat.href}
+            className={cn(
+              "text-md font-medium transition-colors hover:text-black",
+              chat ? "text-black" : "text-neutral-500"
+            )}
+          >
+            Chats
+          </Link>
+        </Button>
+        <Button
           className={cn(
-            "text-md font-medium transition-colors hover:text-black",
+            "bg-white text-md font-medium transition-colors hover:text-black",
             sell ? "text-black" : "text-neutral-500"
           )}
         >
-          Sell
-        </Link>
-      </Button>
-      <Button className="flex items-center rounded-full bg-black px-4 py-2">
+          <Link
+            key={sell.href}
+            href={sell.href}
+            className={cn(
+              "text-md font-medium transition-colors hover:text-black",
+              sell ? "text-black" : "text-neutral-500"
+            )}
+          >
+            Sell
+          </Link>
+        </Button>
+      </div>
+      <Button className="flex items-center rounded-full bg-black">
         <ShoppingBag
           onClick={() => router.push("/cart")}
           size={20}
@@ -81,6 +84,7 @@ const NavbarActions = () => {
         </span>
       </Button>
       <UserButton afterSwitchSessionUrl="/" />
+      <div className="ml-auto flex items-center space-x-4"></div>
     </div>
   );
 };

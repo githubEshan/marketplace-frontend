@@ -3,7 +3,7 @@
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { createMessage } from "@/actions/create-message";
 import axios from "axios";
 import getChat from "@/actions/get-chat";
 
@@ -36,6 +35,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const currentUser = useUser();
   const user = currentUser.user?.id;
+  console.log(data.id);
 
   const onSubmit = async (data: ChatFormValues) => {
     try {
@@ -60,14 +60,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
     }
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getChat(data.id);
-    }, 30000); // Fetch every 30 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   const form = useForm<ChatFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -89,7 +81,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
       </header>
 
       <div>
-        <main className="flex-1 overflow-y-auto p-4 space-y-4">
+        <main className="flex-1 overflow-y-auto p-4 space-y-4 ml-8">
           {data.messages.map((message, index) => {
             const isCurrentUser = message.userId === user;
             return (

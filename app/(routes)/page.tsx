@@ -12,7 +12,7 @@ const HomePage = async () => {
 
   return (
     <Container>
-      <div className="space-y-10 pb-10 boreder-b">
+      <div className="mr-4 ml-4 space-y-8 pb-10 boreder-b">
         <Billboard data={billboard} />
       </div>
       <Separator />

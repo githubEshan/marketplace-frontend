@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils";
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
 
-interface AllChatProps {
+interface ChatPageSideBarProps {
   data: Chat[];
 }
 
-const AllChats: React.FC<AllChatProps> = ({ data }) => {
+const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
   const pathname = usePathname();
   const routes = data.map((route) => ({
     href: `/chat/${route.id}`,
@@ -58,4 +58,4 @@ const AllChats: React.FC<AllChatProps> = ({ data }) => {
   );
 };
 
-export default AllChats;
+export default ChatPageSideBar;
