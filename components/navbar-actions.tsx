@@ -36,8 +36,7 @@ const NavbarActions = () => {
 
   return (
     <div className="ml-auto flex items-center space-x-4">
-      
-      <div className="ml-auto flex items-center space-x-2">
+      <div className="flex items-center">
         <Button
           className={cn(
             "bg-white text-md font-medium transition-colors hover:text-black",
@@ -73,7 +72,7 @@ const NavbarActions = () => {
           </Link>
         </Button>
       </div>
-      <Button className="flex items-center rounded-full bg-black">
+      <Button className="flex items-center rounded-full bg-black py-2">
         <ShoppingBag
           onClick={() => router.push("/cart")}
           size={20}
@@ -83,8 +82,8 @@ const NavbarActions = () => {
           {cart.items.length}
         </span>
       </Button>
+      <span className="px-0.52"></span>
       <UserButton afterSwitchSessionUrl="/" />
-      <div className="ml-auto flex items-center space-x-4"></div>
     </div>
   );
 };

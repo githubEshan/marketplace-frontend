@@ -9,7 +9,7 @@ const ProductClient = () => {
   const router = useRouter();
 
   return (
-    <div className="mt-3 mr-8 ml-5 flex items-center justify-between">
+    <div className="mt-3 ml-14 mr-16 flex items-center justify-between">
       <Heading title={`My Products`} description="" />
       <Button className="mt-4" onClick={() => router.push(`/sell/new`)}>
         Sell A Product

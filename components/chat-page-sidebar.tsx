@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
-import ChatInterface from "@/app/(routes)/chat/[chatId]/components/message-chat";
 
 interface ChatPageSideBarProps {
   data: Chat[];
@@ -25,14 +24,14 @@ const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
   const user = currentUser.user?.id;
 
   return (
-    <div className="h-screen w-80 bg-gray-100 border-r border-gray-300">
+    <div className="h-screen w-80 border-r border-gray-300 bg-gray-50">
       {/* Header */}
-      <div className="h-16 bg-blue-600 text-white flex items-center px-4">
-        <h1 className="text-lg font-bold">Chats</h1>
+      <div className="h-16 text-black flex items-center px-4 shadow bg-white">
+        <h1 className="text-lg font-semibold p-2">My Chats</h1>
       </div>
 
       {/* Chat List */}
-      <nav className="flex-1 overflow-y-auto">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
         {routes
           .filter(
             (route) => route.fromUserId === user || route.toUserId === user
@@ -42,14 +41,13 @@ const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
               key={route.href}
               href={route.href}
               className={cn(
-                "flex items-center px-4 py-3 text-sm font-medium transition-colors",
+                "flex items-center px-4 py-3 text-sm font-medium transition-all rounded-xl hover:shadow-md",
                 route.active
-                  ? "bg-green-100 text-green-800"
-                  : "text-gray-700 hover:bg-gray-200"
+                  ? "bg-blue-200 text-blue-800"
+                  : "bg-white text-gray-800 hover:bg-gray-200 hover:text-blue-700"
               )}
             >
               <div className="flex items-center space-x-3">
-                <div className="h-10 w-10 bg-gray-300 rounded-full"></div>{" "}
                 <span>{route.label}</span>
               </div>
             </Link>

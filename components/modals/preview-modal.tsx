@@ -3,8 +3,7 @@
 import usePreviewModal from "@/hooks/use-preview-modal";
 import Modal from "../ui/modal";
 import Gallery from "../gallery";
-import InfoPreview from "../info-preview";
-
+import InfoPreview from "../ui/info-preview";
 
 const PreviewModal = () => {
   const previewModal = usePreviewModal();

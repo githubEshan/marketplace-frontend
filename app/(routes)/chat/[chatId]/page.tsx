@@ -1,5 +1,8 @@
 import getChat from "@/actions/get-chat";
-import MessagesPage from "./components/message-chat";
+
+import getChats from "@/actions/get-chats";
+import ChatPageSideBar from "@/components/chat-page-sidebar";
+import ChatInterface from "./components/chat-interface";
 
 interface ChatPageProps {
   params: {
@@ -7,10 +10,21 @@ interface ChatPageProps {
   };
 }
 const ChatPage: React.FC<ChatPageProps> = async ({ params }) => {
+  const chats = await getChats({
+    productId: "null",
+  });
   const chat = await getChat(params.chatId);
   return (
-    <div>
-      <MessagesPage data={chat} />
+    <div className="flex h-screen w-full ">
+      {/* Sidebar (Fixed Width) */}
+      <div className="w-80 shrink-0 border-r">
+        <ChatPageSideBar data={chats} />
+      </div>
+
+      {/* Chat Interface (Takes Remaining Space) */}
+      <div className="flex-1">
+        <ChatInterface data={chat} />
+      </div>
     </div>
   );
 };
