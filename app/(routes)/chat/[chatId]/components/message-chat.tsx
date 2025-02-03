@@ -51,7 +51,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
       if (response.status === 200) {
         return response.data;
       } else {
-        throw new Error("Failed to create product");
+        throw new Error("Failed to post message");
       }
     } catch (error) {
       console.log("error");
@@ -71,6 +71,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
 
   return (
     <div className="flex flex-col h-screen bg-gray-100">
+      
       {/* Header */}
       <header className="flex items-center justify-between bg-white shadow px-4 py-3">
         <div className="flex items-center space-x-3">

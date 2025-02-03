@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Chat } from "@/types";
 import { useUser } from "@clerk/nextjs";
+import ChatInterface from "@/app/(routes)/chat/[chatId]/components/message-chat";
 
 interface ChatPageSideBarProps {
   data: Chat[];
