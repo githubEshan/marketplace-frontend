@@ -16,9 +16,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import axios from "axios";
-import getChat from "@/actions/get-chat";
 import { Send, SendHorizonal, SendIcon, Upload } from "lucide-react";
+import { createMessage } from "@/actions/create-message";
 
 interface ChatInterfaceProps {
   data: Chat;
@@ -42,18 +41,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
     try {
       setLoading(true);
       console.log("clicked");
-      const URL = `${process.env.NEXT_PUBLIC_API_URL}/chats/${data.chatId}/messages`;
-      const response = await axios.post(URL, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      getChat(data.chatId);
-      if (response.status === 200) {
-        return response.data;
-      } else {
-        throw new Error("Failed to post message");
-      }
+      createMessage(data);
     } catch (error) {
       console.log("error");
     } finally {

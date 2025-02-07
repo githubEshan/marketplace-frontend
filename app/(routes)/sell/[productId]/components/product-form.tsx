@@ -232,7 +232,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>$Price</FormLabel>
+                    <FormLabel>Price</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -319,7 +319,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     <FormControl>
                       <Input
                         disabled={loading}
-                        placeholder="Add location for product pick up"
+                        placeholder="Add location for product to be picked up"
                         {...field}
                       />
                     </FormControl>

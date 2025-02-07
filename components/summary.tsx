@@ -6,6 +6,10 @@ import Button from "./ui/button";
 import Currency from "./ui/currency";
 import useCart from "@/hooks/use-cart";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/nextjs";
+import { Chat } from "@/types";
+import { createChat } from "@/actions/create-chat";
+import { createMessage } from "@/actions/create-message";
 
 const Summary = () => {
   const searchParams = useSearchParams();
@@ -25,16 +29,46 @@ const Summary = () => {
     }
   }, [searchParams, removeAll]);
 
-  const onCheckout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-      {
-        productIds: items.map((item) => item.id),
-      }
-    );
+  const currentUser = useUser();
+  const user = currentUser.user?.id;
 
-    window.location = response.data.url;
+  const onCheckout = () => {
+    items.forEach((item) => {
+      if (!item.chats || !Array.isArray(item.chats)) {
+        const payload = {
+          fromUserId: user,
+          toUserId: item.userId,
+          productId: item.id,
+          chatName: item.name,
+          messages: [],
+        };
+
+        createChat(payload).then((newChat) => {
+          const initialMessage = {
+            text: `I would like to purchase ${item.name} for ${item.price} dollars. Let me know what time to meet at ${item.location}`,
+            chatId: newChat.id,
+            userId: user,
+          };
+          return createMessage(initialMessage);
+        });
+      } else {
+        const existingChat = item.chats.find(
+          (chat) => chat.fromUserId === user && chat.toUserId === item.userId
+        );
+
+        if (existingChat) {
+          const data = {
+            text: `I would like to purchase ${item.name} for ${item.price} dollars. Let me know what time to meet at ${item.location}`,
+            chatId: existingChat.id,
+            userId: user,
+          };
+          createMessage(data);
+          console.log("message sent");
+        }
+      }
+    });
   };
+
   return (
     <div
       className="
