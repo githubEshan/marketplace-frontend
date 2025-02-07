@@ -77,7 +77,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   const title = initialData ? "Edit Your Product" : "List A Product";
   const toastMessage = initialData ? "Product updated" : "Product Listed.";
-  const action = initialData ? "Save changes" : "Create";
+  const action = initialData ? "Save changes" : "List Product";
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(formSchema),
@@ -159,14 +159,14 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         )}
       </div>
       <Form {...form}>
-        <div className="max-w-6xl mx-auto ml-8 mr-8 p-8  bg-white shadow-lg rounded-xl border border-gray-200">
+        <div className="max-w-6xl mx-auto ml-8 mr-8 p-8   bg-white shadow-lg rounded-xl border border-gray-200">
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Images</FormLabel>
+                  <FormLabel className="mb-2">Images</FormLabel>
                   <FormControl>
                     <ImageUpload
                       value={field.value.map((image) => image.url)}
@@ -178,7 +178,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         form.setValue("images", updatedImages, {
                           shouldValidate: true,
                         });
-                        console.log("Updated images:", updatedImages);
                       }}
                       onRemove={(url) =>
                         field.onChange([
@@ -193,7 +192,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-8">
               <FormField
                 control={form.control}
                 name="name"
