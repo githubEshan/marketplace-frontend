@@ -20,21 +20,24 @@ const Info: React.FC<InfoProps> = ({ data, productChat }) => {
 
   const currentUser = useUser();
   const user = currentUser.user?.id;
+  console.log("user", user);
 
   const addToCart = () => {
     cart.addItem(data);
   };
 
+  console.log("data userId", data.userId);
   const chats = productChat;
-
   const onHandleClick = () => {
-    
-    
     const chat = chats.find(
       (chat) => chat.fromUserId === user && chat.toUserId === data.userId
     );
+
+    console.log(chat);
+
     if (chat) {
       router.push(`/chat/${chat.id}`);
+      console.log("chat found");
     } else {
       const payload = {
         fromUserId: user,
@@ -47,6 +50,7 @@ const Info: React.FC<InfoProps> = ({ data, productChat }) => {
       createChat(payload).then((newChat) => {
         router.push(`/chat/${newChat.id}`);
       });
+      console.log("chat created");
     }
   };
 
