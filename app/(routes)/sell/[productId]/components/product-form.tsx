@@ -75,9 +75,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit product" : "Create A Product";
-  const description = initialData ? "Edit a product" : "Add a new product";
-  const toastMessage = initialData ? "Product updated" : "Product Created.";
+  const title = initialData ? "Edit Your Product" : "List A Product";
+  const toastMessage = initialData ? "Product updated" : "Product Listed.";
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<ProductFormValues>({
@@ -146,8 +145,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         onConfirm={onDelete}
         loading={loading}
       />
-      <div className="flex first-letter:items-center justify-between">
-        <Heading title={title} description={description} />
+      <div className="ml-6 flex first-letter:items-center justify-between">
+        <Heading title={title} />
         {initialData && (
           <Button
             disabled={loading}
@@ -159,184 +158,188 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           </Button>
         )}
       </div>
-      <Separator />
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 w-full"
-        >
-          <FormField
-            control={form.control}
-            name="images"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Images</FormLabel>
-                <FormControl>
-                  <ImageUpload
-                    value={field.value.map((image) => image.url)}
-                    disabled={loading}
-                    onChange={(url) => {
-                      const currentImages = form.getValues("images");
-                      const newImage = { url: url };
-                      const updatedImages = [...currentImages, newImage];
-                      form.setValue("images", updatedImages, {
-                        shouldValidate: true,
-                      });
-                      console.log("Updated images:", updatedImages);
-                    }}
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
-                      ])
-                    }
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="grid grid-cols-3 gap-8">
+        <div className="max-w-6xl mx-auto ml-8 mr-8 p-8  bg-white shadow-lg rounded-xl border border-gray-200">
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
-              name="name"
+              name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Name</FormLabel>
+                  <FormLabel>Images</FormLabel>
                   <FormControl>
-                    <Input
+                    <ImageUpload
+                      value={field.value.map((image) => image.url)}
                       disabled={loading}
-                      placeholder="Add Product Name"
-                      {...field}
+                      onChange={(url) => {
+                        const currentImages = form.getValues("images");
+                        const newImage = { url: url };
+                        const updatedImages = [...currentImages, newImage];
+                        form.setValue("images", updatedImages, {
+                          shouldValidate: true,
+                        });
+                        console.log("Updated images:", updatedImages);
+                      }}
+                      onRemove={(url) =>
+                        field.onChange([
+                          ...field.value.filter(
+                            (current) => current.url !== url
+                          ),
+                        ])
+                      }
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Add Product Name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>$Price</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="Add Product Price"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="categoryId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Product Category</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Product Name</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a category"
-                        />
-                      </SelectTrigger>
+                      <Input
+                        disabled={loading}
+                        placeholder="Add Product Name"
+                        {...field}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="condition"
-              render={({ field }) => (
-                <FormItem className="space-y-3 space-x-3">
-                  <FormLabel>Product Condition</FormLabel>
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex space-y-1 border"
-                    >
-                      <FormItem className="flex items-center space-x-3 space-y-0  ">
-                        <FormControl>
-                          <RadioGroupItem value="new" />
-                        </FormControl>
-                        <FormLabel className="flex items-centerfont-normal">
-                          New
-                        </FormLabel>
-                      </FormItem>
-                      <FormItem className=" flex items-center space-x-3 space-y-0">
-                        <FormControl>
-                          <RadioGroupItem value="used" />
-                        </FormControl>
-                        <FormLabel className="font-normal">Used</FormLabel>
-                      </FormItem>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <FormControl>
-                    <Input
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Product Description</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Add Product Name"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>$Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        disabled={loading}
+                        placeholder="Add Product Price"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Product Category</FormLabel>
+                    <Select
                       disabled={loading}
-                      placeholder="Add location for product pick up"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button>
-        </form>
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            defaultValue={field.value}
+                            placeholder="Select a category"
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="condition"
+                render={({ field }) => (
+                  <FormItem className="space-y-3 space-x-3">
+                    <FormLabel>Product Condition</FormLabel>
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex items-center space-x-6"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0  ">
+                          <FormControl>
+                            <RadioGroupItem value="new" />
+                          </FormControl>
+                          <FormLabel className="flex items-centerfont-normal">
+                            New
+                          </FormLabel>
+                        </FormItem>
+                        <FormItem className=" flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value="used" />
+                          </FormControl>
+                          <FormLabel className="font-normal">Used</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Location</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={loading}
+                        placeholder="Add location for product pick up"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <Button
+              disabled={loading}
+              className="mt-4 ml-auto px-6 py-3 text-lg font-semibold hover:bg-blue-700 text-white rounded-lg shadow-md"
+              type="submit"
+            >
+              {action}
+            </Button>
+          </form>
+        </div>
       </Form>
-      <Separator />
     </>
   );
 };
