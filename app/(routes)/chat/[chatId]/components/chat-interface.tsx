@@ -16,7 +16,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Send, SendHorizonal, SendIcon, Upload } from "lucide-react";
+import { SendIcon } from "lucide-react";
 import { createMessage } from "@/actions/create-message";
 
 interface ChatInterfaceProps {

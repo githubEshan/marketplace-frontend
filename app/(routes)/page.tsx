@@ -1,7 +1,5 @@
 import getBillboard from "@/actions/get-billboard";
-import getProducts from "@/actions/get-products";
 import Billboard from "@/components/billboard";
-import Button from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Separator } from "@/components/ui/separator";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/types";
 import Button from "../ui/button";
 import { Heading } from "../ui/heading";
 import { useRouter } from "next/navigation";

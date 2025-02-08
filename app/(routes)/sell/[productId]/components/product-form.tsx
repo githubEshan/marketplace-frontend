@@ -1,7 +1,6 @@
 "use client";
 
 import * as z from "zod";
-import axios from "axios";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -12,7 +11,6 @@ import { useState } from "react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,7 +29,6 @@ import {
 } from "@/components/ui/select";
 
 import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 import { useUser } from "@clerk/nextjs";

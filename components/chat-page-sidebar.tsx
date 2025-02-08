@@ -10,6 +10,10 @@ interface ChatPageSideBarProps {
   data: Chat[];
 }
 
+const pathname = usePathname();
+const currentUser = useUser();
+const user = currentUser.user?.id;
+
 const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
   if (!data || data.length === 0) {
     return (
@@ -24,7 +28,6 @@ const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
     );
   }
 
-  const pathname = usePathname();
   const routes = data.map((route) => ({
     href: `/chat/${route.id}`,
     label: route.chatName,
@@ -32,9 +35,6 @@ const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
     fromUserId: route.fromUserId,
     toUserId: route.toUserId,
   }));
-
-  const currentUser = useUser();
-  const user = currentUser.user?.id;
 
   return (
     <div className="h-screen w-80 border-r border-gray-300 bg-gray-50">

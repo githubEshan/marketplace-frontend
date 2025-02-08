@@ -3,7 +3,7 @@
 import { Chat, Product } from "@/types";
 import Currency from "./ui/currency";
 import Button from "@/components/ui/button";
-import { MessageCircleIcon, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import useCart from "@/hooks/use-cart";
 import { useRouter } from "next/navigation";
 import { createChat } from "@/actions/create-chat";
