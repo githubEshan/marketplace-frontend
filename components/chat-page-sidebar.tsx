@@ -10,11 +10,10 @@ interface ChatPageSideBarProps {
   data: Chat[];
 }
 
-const pathname = usePathname();
-const currentUser = useUser();
-const user = currentUser.user?.id;
-
 const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
+  const pathname = usePathname();
+  const currentUser = useUser();
+  const user = currentUser.user?.id;
   if (!data || data.length === 0) {
     return (
       <div className="h-screen w-80 border-r border-gray-300 bg-gray-50 flex flex-col">
