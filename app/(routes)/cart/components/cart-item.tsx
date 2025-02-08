@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { X } from "lucide-react";
 import IconButton from "@/components/ui/icon-button";
