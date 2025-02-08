@@ -39,6 +39,7 @@ import { Product, Image, Category } from "@/types";
 import { Button } from "@/components/ui/bt";
 import { createProduct } from "@/actions/create-product";
 import { updateProduct } from "@/actions/update-product";
+import { deleteProduct } from "@/actions/delete-product";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -125,10 +126,19 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
   const onDelete = async () => {
     try {
-      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
+      const userId = currentUser.user?.id;
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/products/${params.productId}`;
+
+      if (!userId) {
+        toast.error("User ID is missing");
+        return;
+      }
+
+      await deleteProduct(URL, userId); // Await the function
+
       router.refresh();
-      router.push("/");
-      toast.success("product deleted");
+      router.push("/sell");
+      toast.success("Product deleted");
     } catch (error) {
       toast.error("Something went wrong");
     } finally {

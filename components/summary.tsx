@@ -7,7 +7,6 @@ import Currency from "./ui/currency";
 import useCart from "@/hooks/use-cart";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
-import { Chat } from "@/types";
 import { createChat } from "@/actions/create-chat";
 import { createMessage } from "@/actions/create-message";
 
@@ -82,7 +81,7 @@ const Summary = () => {
           <Currency value={totalPrice} />
         </div>
       </div>
-      <Button onClick={onCheckout} className="w-full mt-6">
+      <Button onClick={onCheckout} className="w-full mt-6" disabled = {items.length === 0}>
         Place Order
       </Button>
     </div>
