@@ -16,12 +16,11 @@ const ChatPage: React.FC<ChatPageProps> = async ({ params }) => {
   const chat = await getChat(params.chatId);
   return (
     <div className="flex h-screen w-full ">
-      {/* Sidebar (Fixed Width) */}
+
       <div className="w-80 shrink-0 border-r">
         <ChatPageSideBar data={chats} />
       </div>
 
-      {/* Chat Interface (Takes Remaining Space) */}
       <div className="flex-1">
         <ChatInterface data={chat} />
       </div>

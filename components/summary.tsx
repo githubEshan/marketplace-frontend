@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -9,6 +8,7 @@ import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
 import { createChat } from "@/actions/create-chat";
 import { createMessage } from "@/actions/create-message";
+import router from "next/router";
 
 const Summary = () => {
   const searchParams = useSearchParams();
@@ -63,6 +63,7 @@ const Summary = () => {
           };
           createMessage(data);
           console.log("message sent");
+          router.push(`/chats/${existingChat.id}`);
         }
       }
     });
@@ -81,7 +82,11 @@ const Summary = () => {
           <Currency value={totalPrice} />
         </div>
       </div>
-      <Button onClick={onCheckout} className="w-full mt-6" disabled = {items.length === 0}>
+      <Button
+        onClick={onCheckout}
+        className="w-full mt-6"
+        disabled={items.length === 0}
+      >
         Place Order
       </Button>
     </div>

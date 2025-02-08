@@ -11,6 +11,19 @@ interface ChatPageSideBarProps {
 }
 
 const ChatPageSideBar: React.FC<ChatPageSideBarProps> = ({ data }) => {
+  if (!data || data.length === 0) {
+    return (
+      <div className="h-screen w-80 border-r border-gray-300 bg-gray-50 flex flex-col">
+        <div className="h-16 text-black flex items-center px-4 shadow bg-white">
+          <h1 className="text-lg font-semibold p-2">My Chats</h1>
+        </div>
+        <div className="flex-1 flex items-center justify-center text-gray-500">
+          No Chats Available
+        </div>
+      </div>
+    );
+  }
+
   const pathname = usePathname();
   const routes = data.map((route) => ({
     href: `/chat/${route.id}`,
