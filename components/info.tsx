@@ -20,18 +20,19 @@ const Info: React.FC<InfoProps> = ({ data, productChat }) => {
 
   const currentUser = useUser();
   const user = currentUser.user?.id;
-  console.log(user);
-
-  console.log("data user Id", data.userId);
-  const addToCart = () => {
-    const dataWithChat = {
-      ...data,
-      chats: productChat,
-    };
-    cart.addItem(dataWithChat);
-  };
 
   const chats = productChat;
+
+  const dataWithChat = {
+    ...data,
+    chats: chats,
+  };
+
+  const addToCart = () => {
+    cart.addItem(dataWithChat);
+    console.log("this was sent to the cart", dataWithChat)
+  };
+
   const onHandleClick = () => {
     const chat = chats.find(
       (chat) => chat.fromUserId === user && chat.toUserId === data.userId
