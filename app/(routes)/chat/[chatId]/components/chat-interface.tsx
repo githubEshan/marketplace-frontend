@@ -77,7 +77,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
               <div
                 key={index}
                 className={`flex ${
-                  isCurrentUser ? "justify-end" : "justify-start"
+                  isCurrentUser
+                    ? "justify-end mr-3 mt-3"
+                    : "justify-start mt-3 ml-3"
                 }`}
               >
                 <div
