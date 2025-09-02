@@ -36,7 +36,7 @@ const Categorypage: React.FC<CategoryPageProps> = async ({
   return (
     <div className="bg-white mr-4 ml-4 ">
       <Container>
-        <Billboard data={category.billboard} />
+        <Billboard data={category?.billboard} />
         <div className="px-4 sm:px-8 pb-24 ml-8 mr-10">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-10 mb-5">
             <FilterForm filters={{ condition: searchParams.condition }}/>
