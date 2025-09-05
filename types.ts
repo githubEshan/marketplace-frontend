@@ -42,4 +42,5 @@ export interface Message{
     userId: string;
     text: string;
     chatId: string;
+    storeId: string
 }

@@ -64,6 +64,7 @@ const Summary = () => {
         text: `I would like to purchase ${data.name} for ${data.price} dollars. Let me know what time to meet at ${data.location}`,
         userId: user,
         chatId: chat.id,
+        storeId: "b34f7384-3ab1-47c7-bff0-274026b30446"
       };
       createMessage(message);
       toast.success("Message sent to Seller");
@@ -83,6 +84,7 @@ const Summary = () => {
             text: `I would like to purchase ${data.name} for ${data.price} dollars. Let me know what time to meet at ${data.location}`,
             userId: user,
             chatId: newChat.id,
+            storeId: "b34f7384-3ab1-47c7-bff0-274026b30446"
           };
           createMessage(message);
           toast.success("Chat created and Seller Notified");
