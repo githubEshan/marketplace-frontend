@@ -35,7 +35,6 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const currentUser = useUser();
   const user = currentUser.user?.id;
-  console.log(data.id);
 
   const onSubmit = async (data: ChatFormValues) => {
     try {

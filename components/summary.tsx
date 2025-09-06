@@ -16,6 +16,7 @@ const Summary = () => {
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
   const [chats, setChats] = useState<Record<string, Chat[]>>({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
@@ -46,7 +47,6 @@ const Summary = () => {
 
   const currentUser = useUser();
   const user = currentUser.user?.id;
-  console.log(chats);
 
   const onCheckout = async (data: {
     userId: string;
@@ -66,7 +66,7 @@ const Summary = () => {
         chatId: chat.id,
         storeId: "b34f7384-3ab1-47c7-bff0-274026b30446"
       };
-      createMessage(message);
+      await createMessage(message);
       toast.success("Message sent to Seller");
     } else {
       const payload = {
@@ -86,14 +86,56 @@ const Summary = () => {
             chatId: newChat.id,
             storeId: "b34f7384-3ab1-47c7-bff0-274026b30446"
           };
-          createMessage(message);
+          await createMessage(message);
           toast.success("Chat created and Seller Notified");
         } else {
           console.error("Failed to create chat or missing chat ID:", newChat);
+          throw new Error("Failed to create chat");
         }
       } catch (error) {
         console.error("Error creating chat:", error);
+        throw error; // Re-throw to handle in the main function
       }
+    }
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!user) {
+      toast.error("Please sign in to place an order");
+      return;
+    }
+
+    if (items.length === 0) {
+      toast.error("Your cart is empty");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Process all items
+      const promises = items.map((item) =>
+        onCheckout({
+          userId: item.userId,
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          location: item.location,
+        })
+      );
+
+      // Wait for all checkouts to complete
+      await Promise.all(promises);
+
+      // Clear the cart after successful checkout
+      removeAll();
+      toast.success("Order placed successfully! Cart cleared.");
+      
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      toast.error("Failed to place some orders. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -111,22 +153,11 @@ const Summary = () => {
         </div>
       </div>
       <Button
-        onClick={(event) => {
-          // Here, you can loop through your items and pass the necessary properties to `onCheckout`.
-          items.forEach((item) => {
-            onCheckout({
-              userId: item.userId,
-              id: item.id,
-              name: item.name,
-              price: item.price,
-              location: item.location,
-            });
-          });
-        }}
+        onClick={handlePlaceOrder}
         className="w-full mt-6"
-        disabled={items.length === 0}
+        disabled={items.length === 0 || isLoading || !user}
       >
-        Place Order
+        {isLoading ? "Placing Order..." : "Place Order"}
       </Button>
     </div>
   );
